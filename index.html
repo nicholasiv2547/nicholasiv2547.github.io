@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คำนวณภาษี - รายรับ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>คำนวณภาษีเงินได้บุคคลธรรมดา</h1>
+    <h2>หน้า 1: รายรับ</h2>
+    <form id="incomeForm" action="deduction.html">
+        <label>เงินเดือน (บาท):</label>
+        <input type="number" id="salary" required>
+
+        <label>โบนัส (บาท):</label>
+        <input type="number" id="bonus">
+
+        <label>รายได้อื่นๆ (บาท):</label>
+        <input type="number" id="otherIncome">
+
+        <button type="submit">ถัดไป</button>
+    </form>
+    <script>
+        document.getElementById('incomeForm').onsubmit = function (event) {
+            event.preventDefault();
+            const salary = parseFloat(document.getElementById('salary').value || 0);
+            const bonus = parseFloat(document.getElementById('bonus').value || 0);
+            const otherIncome = parseFloat(document.getElementById('otherIncome').value || 0);
+
+            const totalIncome = salary + bonus + otherIncome;
+            localStorage.setItem('totalIncome', totalIncome);
+            window.location.href = 'deduction.html';
+        };
+    </script>
+</body>
+</html>
