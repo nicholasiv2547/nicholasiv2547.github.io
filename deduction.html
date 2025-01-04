@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คำนวณภาษี - ลดหย่อน</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>คำนวณภาษีเงินได้บุคคลธรรมดา</h1>
+    <h2>หน้า 2: รายการลดหย่อนภาษี</h2>
+    <form id="deductionForm" action="result.html">
+        <label>สถานภาพ:</label>
+        <select id="status">
+            <option value="single">โสด</option>
+            <option value="married_joint">คู่สมรสยื่นร่วมกัน</option>
+            <option value="married_separate">คู่สมรสยื่นแยกกัน</option>
+            <option value="divorced">หย่าล้าง</option>
+        </select>
+
+        <label>จำนวนลูก (คน):</label>
+        <input type="number" id="children" value="0">
+
+        <label>ลดหย่อนค่าใช้จ่ายส่วนตัว (บาท):</label>
+        <input type="number" id="personalDeduction" value="60000" disabled>
+
+        <button type="submit">ดูผลลัพธ์</button>
+    </form>
+    <script>
+        document.getElementById('deductionForm').onsubmit = function (event) {
+            event.preventDefault();
+            const status = document.getElementById('status').value;
+            const children = parseInt(document.getElementById('children').value || 0);
+            const personalDeduction = parseInt(document.getElementById('personalDeduction').value);
+
+            localStorage.setItem('status', status);
+            localStorage.setItem('children', children);
+            localStorage.setItem('personalDeduction', personalDeduction);
+
+            window.location.href = 'result.html';
+        };
+    </script>
+</body>
+</html>
