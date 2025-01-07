@@ -3,39 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>รายการลดหย่อนภาษี</title>
+    <title>คำนวณภาษี - ลดหย่อน</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>รายการลดหย่อนภาษี</h1>
-        <form id="deductions-form">
-            <label for="status">สถานะทางครอบครัว:</label>
-            <select id="status" name="status" required>
-                <option value="single">โสด</option>
-                <option value="divorced">หย่า</option>
-                <option value="spouse-with-income">คู่สมรสมีเงินได้ (แยกยื่น)</option>
-                <option value="spouse-without-income">คู่สมรสไม่มีเงินได้</option>
-            </select>
+    <h1>คำนวณภาษีเงินได้บุคคลธรรมดา</h1>
+    <h2>หน้า 2: รายการลดหย่อนภาษี</h2>
+    <form id="deductionForm" action="result.html">
+        <label>สถานภาพ:</label>
+        <select id="status">
+            <option value="single">โสด</option>
+            <option value="married_joint">คู่สมรสยื่นร่วมกัน</option>
+            <option value="married_separate">คู่สมรสยื่นแยกกัน</option>
+            <option value="divorced">หย่าล้าง</option>
+        </select>
 
-            <label for="personal-deduction">
-                <input type="checkbox" id="personal-deduction"> ลดหย่อนส่วนบุคคล 60,000 บาท
-            </label>
+        <label>จำนวนลูก (คน):</label>
+        <input type="number" id="children" value="0">
 
-            <label for="parents-deduction">
-                <input type="checkbox" id="parents-deduction"> ลดหย่อนบิดา-มารดา (ตนเอง)
-                <small>คนละ 30,000 บาท (บิดามารดาต้องมีอายุเกิน 60 ปี และมีรายได้ไม่เกิน 30,000 บาทต่อปี)</small>
-            </label>
+        <label>ลดหย่อนค่าใช้จ่ายส่วนตัว (บาท):</label>
+        <input type="number" id="personalDeduction" value="60000" disabled>
 
-            <label for="disabled-deduction">
-                <input type="checkbox" id="disabled-deduction"> ลดหย่อนผู้พิการหรือทุพพลภาพ (ไม่มีเงินได้)
-                <small>กรณีบิดา, มารดา, คู่สมรส, บิดาคู่สมรส, มารดาคู่สมรส หรือบุตรของตนเอง</small>
-            </label>
+        <button type="submit">ดูผลลัพธ์</button>
+    </form>
+    <script>
+        document.getElementById('deductionForm').onsubmit = function (event) {
+            event.preventDefault();
+            const status = document.getElementById('status').value;
+            const children = parseInt(document.getElementById('children').value || 0);
+            const personalDeduction = parseInt(document.getElementById('personalDeduction').value);
 
-            <button type="button" onclick="calculateTax()">คำนวณภาษี</button>
-        </form>
-    </div>
+            localStorage.setItem('status', status);
+            localStorage.setItem('children', children);
+            localStorage.setItem('personalDeduction', personalDeduction);
 
-    <script src="script.js"></script>
+            window.location.href = 'result.html';
+        };
+    </script>
 </body>
 </html>
